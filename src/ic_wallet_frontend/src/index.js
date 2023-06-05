@@ -1,19 +1,56 @@
-import { ic_wallet_backend } from "../../declarations/ic_wallet_backend";
+import {get_actor, identify, is_logged, logout} from "./utils/agent";
 
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const button = e.target.querySelector("button");
+const actor = await get_actor();
 
-  const name = document.getElementById("name").value.toString();
+async function login() {
 
-  button.setAttribute("disabled", true);
+    let is_logged_in = await is_logged();
 
-  // Interact with foo actor, calling the greet method
-  const greeting = await ic_wallet_backend.greet(name);
 
-  button.removeAttribute("disabled");
+    let loginButton = document.getElementById("login");
+    if (is_logged_in) {
+        loginButton.innerText = "logout";
+    }
+    loginButton.addEventListener("click", async () => {
+        if (is_logged_in) {
+            loginButton.classList.add("loader");
+            await logout();
+            loginButton.classList.remove("loader");
+        } else {
+            loginButton.classList.add("loader");
+            await identify();
+            loginButton.classList.remove("loader");
+        }
 
-  document.getElementById("greeting").innerText = greeting;
+    })
 
-  return false;
-});
+}
+
+async function check_connection() {
+    const is_connected = await actor.test_connection();
+    if (is_connected === true) {
+        document.querySelector(".dot").style.backgroundColor = "lightgreen"
+    }
+}
+
+async function check_balance() {
+    const balance = await actor.getBalance();
+    console.log(balance)
+    let balance_button = document.querySelector("#balance");
+    balance_button.innerText = "0 ICP"
+    balance_button.style.color = "green"
+}
+
+async function main() {
+    await login();
+    await check_connection();
+    await check_balance();
+    let button = document.getElementById("wallet_public_address")
+    button.classList.add("loader");
+    const wallet_public_address = await actor.getDepositAddress();
+    button.innerText = wallet_public_address;
+    button.classList.remove("loader");
+
+}
+
+await main();

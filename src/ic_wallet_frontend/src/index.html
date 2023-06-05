@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>ic_wallet</title>
-    <base href="/" />
-    <link rel="icon" href="favicon.ico" />
-    <link type="text/css" rel="stylesheet" href="main.css" />
-  </head>
-  <body>
-    <main>
-      <img src="logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#">
-        <label for="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting"></section>
-    </main>
-  </body>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>ic wallet</title>
+    <base href="/"/>
+    <link rel="icon" href="favicon.ico"/>
+    <link type="text/css" rel="stylesheet" href="main.css"/>
+</head>
+<body>
+<span>status:</span>
+<span class="dot"></span>
+<span><button id="login">login</button></span>
+<hr>
+<span>wallet public address:</span>
+<span style="color: green" id="wallet_public_address"></span>
+<hr>
+<span>Your balance:</span>
+<span id="balance"></span>
+
+
+<hr/>
+<span>withdraw:</span>
+<input id="withdraw_amount" type="number" placeholder="amount"/>
+<input id="withdraw_address" type="text" placeholder="withdraw address"/>
+<button id="withdraw">withdraw</button>
+
+<hr/>
+</body>
 </html>

@@ -8,11 +8,12 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-ic-ledger-types = "0.1.0"
-#generate_candid = { path = "../../generate_candid" }
-#candid_gen = { git = "https://github.com/aliscie/autodox-libraries/candid_gen" }
+num-bigint = "0.4"
+num-traits = "0.2.14"
+ic-ledger-types = "0.5.0"
+#ut = { git = "https://github.com/aliscie/autodox-libraries/tree/main/candid_gen" }
 candid = "0.8"
-ic-cdk = "0.7"
-ic-cdk-timers = "0.1"
+ic-cdk = "0.8.1"
+ic-cdk-timers = "0.2.0"
 ic-cdk-macros = "0.6.0"
-ic-types = "0.2.1"
+ic-types = "0.7.0"
