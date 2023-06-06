@@ -6,10 +6,12 @@ async function login() {
 
     let is_logged_in = await is_logged();
 
-
     let loginButton = document.getElementById("login");
     if (is_logged_in) {
         loginButton.innerText = "logout";
+        let auth = await identify();
+        document.getElementById("user_principal").innerText = auth._principal.toText();
+        return auth._principal.toText();
     }
     loginButton.addEventListener("click", async () => {
         if (is_logged_in) {
@@ -18,7 +20,7 @@ async function login() {
             loginButton.classList.remove("loader");
         } else {
             loginButton.classList.add("loader");
-            await identify();
+            let x = await identify();
             loginButton.classList.remove("loader");
         }
 
@@ -43,13 +45,13 @@ async function check_balance() {
 
 async function main() {
     await login();
-    await check_connection();
-    await check_balance();
-    let button = document.getElementById("wallet_public_address")
-    button.classList.add("loader");
+    // await check_connection();
+    // await check_balance();
+    // let button = document.getElementById("wallet_public_address")
+    // button.classList.add("loader");
     const wallet_public_address = await actor.getDepositAddress();
-    button.innerText = wallet_public_address;
-    button.classList.remove("loader");
+    // button.innerText = wallet_public_address;
+    // button.classList.remove("loader");
 
 }
 
