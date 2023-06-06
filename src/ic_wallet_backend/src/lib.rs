@@ -19,9 +19,6 @@ use crate::utils::principal_to_subaccount;
 mod types;
 mod utils;
 
-thread_local! {
-    static STATE: RefCell<State> = RefCell::new(State::default());
-}
 
 async fn transfer_to_caller(to: AccountIdentifier, amount: Tokens) -> BlockIndex {
     ic_ledger_types::transfer(
@@ -53,11 +50,6 @@ pub async fn withdraw(_to: String, _amount: u64) -> BlockIndex {
 #[candid_method(query)]
 pub async fn test_connection() -> bool { true }
 
-// #[query(name = "getBalance")]
-// #[candid_method(query, rename = "getBalance")]
-// pub fn get_balance(token_canister_id: Principal) -> Nat {
-//     STATE.with(|s| s.borrow().exchange.get_balance(token_canister_id))
-// }
 
 #[update(name = "getDepositAddress")]
 #[candid_method(update, rename = "getDepositAddress")]
@@ -83,21 +75,16 @@ pub fn get_deposit_address() -> String {
 // }
 
 
-// #[query(name = "getBalance")]
-// #[candid_method(query, rename = "getBalance")]
-// pub async fn get_balance() -> Tokens {
-//     let balance: Tokens = account_balance(
-//         MAINNET_LEDGER_CANISTER_ID,
-//         AccountBalanceArgs {
-//             account: AccountIdentifier::new(&caller(), &DEFAULT_SUBACCOUNT)
-//         },
-//     ).await.expect("call to ledger failed");
-//     balance
-// }
+thread_local! {
+    static STATE: RefCell<State> = RefCell::new(State::default());
+}
 
-#[query(name = "getBalance")]
-#[candid_method(query, rename = "getBalance")]
-pub fn get_balance() -> Vec<Balance> {
+
+
+
+#[query(name = "getBalances")]
+#[candid_method(query, rename = "getBalances")]
+pub fn get_balances() -> Vec<Balance> {
     STATE.with(|s| s.borrow().exchange.get_balances())
 }
 

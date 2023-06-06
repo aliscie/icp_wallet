@@ -3,7 +3,6 @@ import {get_actor, identify, is_logged, logout} from "./utils/agent";
 const actor = await get_actor();
 
 async function login() {
-
     let is_logged_in = await is_logged();
 
     let loginButton = document.getElementById("login");
@@ -11,12 +10,14 @@ async function login() {
         loginButton.innerText = "logout";
         let auth = await identify();
         document.getElementById("user_principal").innerText = auth._principal.toText();
-        return auth._principal.toText();
     }
     loginButton.addEventListener("click", async () => {
+        console.log("click")
         if (is_logged_in) {
+            console.log("logout")
             loginButton.classList.add("loader");
             await logout();
+            window.location.reload();
             loginButton.classList.remove("loader");
         } else {
             loginButton.classList.add("loader");
@@ -36,7 +37,7 @@ async function check_connection() {
 }
 
 async function check_balance() {
-    const balance = await actor.getBalance();
+    const balance = await actor.getBalances();
     console.log(balance)
     let balance_button = document.querySelector("#balance");
     balance_button.innerText = "0 ICP"
@@ -45,13 +46,13 @@ async function check_balance() {
 
 async function main() {
     await login();
-    // await check_connection();
-    // await check_balance();
-    // let button = document.getElementById("wallet_public_address")
-    // button.classList.add("loader");
+    await check_connection();
+    await check_balance();
+    let button = document.getElementById("wallet_public_address")
+    button.classList.add("loader");
     const wallet_public_address = await actor.getDepositAddress();
-    // button.innerText = wallet_public_address;
-    // button.classList.remove("loader");
+    button.innerText = wallet_public_address;
+    button.classList.remove("loader");
 
 }
 

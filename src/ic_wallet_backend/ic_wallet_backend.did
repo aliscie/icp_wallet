@@ -1,6 +1,6 @@
 type Balance = record { token : principal; owner : principal; amount : nat };
 service : {
-  getBalance : () -> (vec Balance) query;
+  getBalances : () -> (vec Balance) query;
   getDepositAddress : () -> (text);
   test_connection : () -> (bool) query;
   withdraw : (text, nat64) -> (nat64);
