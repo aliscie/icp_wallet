@@ -1,4 +1,5 @@
 import {get_actor, identify, is_logged, logout} from "./utils/agent";
+import {log} from "util";
 
 const actor = await get_actor();
 
@@ -9,6 +10,7 @@ async function login() {
     if (is_logged_in) {
         loginButton.innerText = "logout";
         let auth = await identify();
+        console.log(auth)
         document.getElementById("user_principal").innerText = auth._principal.toText();
     }
     loginButton.addEventListener("click", async () => {
@@ -37,14 +39,15 @@ async function check_connection() {
 }
 
 async function check_balance() {
-    const balance = await actor.getBalances();
-    console.log(balance)
+    const balances = await actor.getBalances();
+    console.log("balances", balances)
     let balance_button = document.querySelector("#balance");
     balance_button.innerText = "0 ICP"
     balance_button.style.color = "green"
 }
 
 async function main() {
+    // await logout();
     await login();
     await check_connection();
     await check_balance();

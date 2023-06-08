@@ -1,3 +1,6 @@
+download:
+	./scripts/download_ledger.sh
+
 SHELL = /bin/bash
 
 .PHONY: all
@@ -45,3 +48,11 @@ clean:
 	rm -fr src/frontend/node_modules/
 	rm -fr src/frontend/declarations/
 	rm -fr src/frontend/build/
+
+ledger_init:
+	dfx nns install
+
+
+
+kill:
+	kill -INT $(lsof -t -i :4943)

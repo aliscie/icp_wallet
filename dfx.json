@@ -8,12 +8,6 @@
         "ledger"
       ]
     },
-    "AkitaDIP20": {
-      "main": "src/DIP20/motoko/src/token.mo"
-    },
-    "GoldenDIP20": {
-      "main": "src/DIP20/motoko/src/token.mo"
-    },
     "ledger": {
       "type": "custom",
       "candid": "src/ledger/ledger.did",
@@ -44,9 +38,8 @@
     }
   },
   "defaults": {
-    "build": {
-      "args": "",
-      "packtool": ""
+    "replica": {
+      "subnet_type": "system"
     }
   },
   "output_env_file": ".env",

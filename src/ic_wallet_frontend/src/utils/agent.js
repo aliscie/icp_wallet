@@ -4,7 +4,9 @@ import {idlFactory} from "../../../declarations/ic_wallet_backend";
 
 
 // CANISTER_ID is replaced by webpack based on node environment
-export const canisterId = "bkyz2-fmaaa-aaaaa-qaaaq-cai"
+export const port = "4943"
+export const canisterId = "br5f7-7uaaa-aaaaa-qaaca-cai"
+export const identityId = "be2us-64aaa-aaaaa-qaabq-cai"
 
 export const createActor = (canisterId, options = {}) => {
     const agent = options.agent || new HttpAgent({...options.agentOptions});
@@ -50,7 +52,7 @@ export async function identify() {
     //     identityProvider = `http://${import.meta.env.VITE_IDENTITY_PROVIDER_ID}.localhost:8510/#authorize`
     // }
 
-    identityProvider = `http://be2us-64aaa-aaaaa-qaabq-cai.localhost:4943/#authorize`
+    identityProvider = `http://${identityId}.localhost:${port}/#authorize`
     return await authClient.login({
         identityProvider,
         onSuccess: () => {
