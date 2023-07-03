@@ -1,7 +1,10 @@
 type Balance = record { token : principal; owner : principal; amount : nat };
+type DepositErr = variant { TransferFailure; BalanceLow };
+type Result = variant { Ok : nat; Err : DepositErr };
 service : {
   getBalances : () -> (vec Balance) query;
   getDepositAddress : () -> (text);
+  my_balance : () -> (Result);
   test_connection : () -> (bool) query;
   withdraw : (text, nat64) -> (nat64);
 }

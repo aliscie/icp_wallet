@@ -32,10 +32,10 @@ async function login() {
 }
 
 async function check_connection() {
-    const is_connected = await actor.test_connection();
-    if (is_connected === true) {
-        document.querySelector(".dot").style.backgroundColor = "lightgreen"
-    }
+    // const is_connected = await actor.test_connection();
+    // if (is_connected === true) {
+    //     document.querySelector(".dot").style.backgroundColor = "lightgreen"
+    // }
 }
 
 async function check_balance() {
@@ -56,6 +56,8 @@ async function main() {
     const wallet_public_address = await actor.getDepositAddress();
     button.innerText = wallet_public_address;
     button.classList.remove("loader");
+
+
 
 }
 

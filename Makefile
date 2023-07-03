@@ -55,4 +55,8 @@ ledger_init:
 
 
 kill:
-	kill -INT $(lsof -t -i :4943)
+	kill -INT $(lsof -t -i :255)
+
+
+kill_dfx:
+	killall dfx replica

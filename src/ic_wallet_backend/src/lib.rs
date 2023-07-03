@@ -88,6 +88,20 @@ pub fn get_balances() -> Vec<Balance> {
     STATE.with(|s| s.borrow().exchange.get_balances())
 }
 
+// #[query]
+// #[candid_method(update)]
+// pub async fn my_balance() -> Result<Nat, DepositErr> {
+//     let canister_id = ic_cdk::api::id();
+//     let ledger_canister_id = STATE
+//         .with(|s| s.borrow().ledger)
+//         .unwrap_or(MAINNET_LEDGER_CANISTER_ID);
+//
+//     let account = AccountIdentifier::new(&canister_id, &principal_to_subaccount(&caller()));
+//     let balance_args = ic_ledger_types::AccountBalanceArgs { account };
+//     let balance = ic_ledger_types::account_balance(ledger_canister_id, balance_args).await.map_err(|_| DepositErr::TransferFailure)?;
+//     Ok(candid::Nat::from(balance.e8s()))
+// }
+
 
 #[cfg(test)]
 mod tests {

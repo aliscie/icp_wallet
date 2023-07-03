@@ -2,6 +2,7 @@ use candid::{candid_method, export_service, CandidType, Nat, Principal};
 use std::collections::HashMap;
 use ic_cdk::caller;
 use crate::utils;
+use crate::utils::zero;
 // use crate::utils::zero;
 
 pub type DepositReceipt = Result<Nat, DepositErr>;
@@ -11,42 +12,42 @@ pub type OrderId = u32;
 #[derive(Default)]
 pub struct Balances(pub HashMap<Principal, HashMap<Principal, Nat>>);
 
-// impl Balances {
-//     pub fn add_balance(&mut self, owner: &Principal, token_canister_id: &Principal, delta: Nat) {
-//         let balances = self.0.entry(*owner).or_insert_with(HashMap::new);
-//
-//         if let Some(x) = balances.get_mut(token_canister_id) {
-//             *x += delta;
-//         } else {
-//             balances.insert(*token_canister_id, delta);
-//         }
-//     }
-//
-//     // Tries to substract balance from user account. Checks for overflows
-//     pub fn subtract_balance(
-//         &mut self,
-//         owner: &Principal,
-//         token_canister_id: &Principal,
-//         delta: Nat,
-//     ) -> bool {
-//         if let Some(balances) = self.0.get_mut(owner) {
-//             if let Some(x) = balances.get_mut(token_canister_id) {
-//                 if *x >= delta {
-//                     *x -= delta;
-//                     // no need to keep an empty token record
-//                     if *x == zero() {
-//                         balances.remove(token_canister_id);
-//                     }
-//                     return true;
-//                 } else {
-//                     return false;
-//                 }
-//             }
-//         }
-//
-//         false
-//     }
-// }
+impl Balances {
+    pub fn add_balance(&mut self, owner: &Principal, token_canister_id: &Principal, delta: Nat) {
+        let balances = self.0.entry(*owner).or_insert_with(HashMap::new);
+
+        if let Some(x) = balances.get_mut(token_canister_id) {
+            *x += delta;
+        } else {
+            balances.insert(*token_canister_id, delta);
+        }
+    }
+
+    // Tries to substract balance from user account. Checks for overflows
+    pub fn subtract_balance(
+        &mut self,
+        owner: &Principal,
+        token_canister_id: &Principal,
+        delta: Nat,
+    ) -> bool {
+        if let Some(balances) = self.0.get_mut(owner) {
+            if let Some(x) = balances.get_mut(token_canister_id) {
+                if *x >= delta {
+                    *x -= delta;
+                    // no need to keep an empty token record
+                    if *x == zero() {
+                        balances.remove(token_canister_id);
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        false
+    }
+}
 
 // owner -> token_canister_id -> amount
 type Orders = HashMap<OrderId, Order>;
